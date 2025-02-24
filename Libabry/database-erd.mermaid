@@ -1,0 +1,50 @@
+erDiagram
+    USERS {
+        int user_id PK
+        varchar name
+        varchar email
+        varchar password_hash
+        datetime created_at
+    }
+    AUTHORS {
+        int author_id PK
+        varchar name
+    }
+    CATEGORIES {
+        int category_id PK
+        varchar name
+    }
+    BOOKS {
+        int book_id PK
+        varchar title
+        int author_id FK
+        int category_id FK
+        year published_year
+        int available_copies
+    }
+    EMPLOYEES {
+        int employee_id PK
+        varchar name
+        varchar email
+        enum role
+    }
+    LOANS {
+        int loan_id PK
+        int user_id FK
+        int book_id FK
+        date loan_date
+        date return_date
+        boolean returned
+    }
+    RETURNS {
+        int return_id PK
+        int loan_id FK
+        date return_date
+        enum condition
+    }
+
+    BOOKS ||--o{ LOANS : has
+    AUTHORS ||--o{ BOOKS : writes
+    CATEGORIES ||--o{ BOOKS : contains
+    USERS ||--o{ LOANS : makes
+    LOANS ||--|| RETURNS : has
